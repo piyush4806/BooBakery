@@ -408,6 +408,7 @@ export default function Home() {
           <img 
             src="/images/boobakery-logo.png" 
             alt="boobakery logo" 
+            className="header-logo-img"
             style={{ 
               height: "45px", 
               width: "45px", 
@@ -417,7 +418,7 @@ export default function Home() {
               backgroundColor: "pink"
             }} 
           />
-          <span style={{
+          <span className="header-logo-text" style={{
             fontFamily: "var(--font-serif)",
             fontWeight: "bold",
             fontSize: "1.6rem",
@@ -464,7 +465,7 @@ export default function Home() {
           )}
         </nav>
 
-        <div style={{ display: "flex", gap: "1.2rem", alignItems: "center" }}>
+        <div className="header-actions" style={{ display: "flex", gap: "1.2rem", alignItems: "center" }}>
           {/* Wishlist Icon with count */}
           <button 
             onClick={() => setIsWishlistOpen(true)}
@@ -502,6 +503,7 @@ export default function Home() {
           {/* Cart Icon with count */}
           <button 
             onClick={() => setIsCartOpen(true)}
+            className="cart-btn"
             style={{
               background: "none",
               border: "none",
@@ -518,7 +520,7 @@ export default function Home() {
             aria-label="Open Cart"
           >
             <ShoppingBag size={18} />
-            <span style={{ fontWeight: "600", fontSize: "0.9rem" }}>
+            <span className="cart-text" style={{ fontWeight: "600", fontSize: "0.9rem" }}>
               ₹{cartSubtotal}
             </span>
             {cart.length > 0 && (
@@ -578,11 +580,11 @@ export default function Home() {
       </div>
 
       {/* Hero Banner Section */}
-      <section className="section" style={{ position: "relative", zIndex: 1, paddingBottom: "2rem" }}>
+      <section className="section" style={{ position: "relative", zIndex: 1, paddingBottom: "2rem", overflowX: "hidden" }}>
         <div className="container hero-grid">
           <div>
-            <div style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", padding: "0.4rem 1rem", backgroundColor: "var(--accent-rose-light)", borderRadius: "50px", color: "var(--text-secondary)", fontWeight: "600", fontSize: "0.85rem", marginBottom: "1.5rem" }}>
-              <Sparkles size={16} className="sparkle-icon" /> Natural crunch, rich chocolate... the perfect pair.
+            <div className="hero-badge" style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", padding: "0.4rem 1rem", backgroundColor: "var(--accent-rose-light)", borderRadius: "50px", color: "var(--text-secondary)", fontWeight: "600", fontSize: "0.85rem", marginBottom: "1.5rem" }}>
+              <Sparkles size={16} className="sparkle-icon" style={{ flexShrink: 0 }} /> <span>Natural crunch, rich chocolate... the perfect pair.</span>
             </div>
             <h1 style={{
               fontSize: "4rem",
