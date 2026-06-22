@@ -14,7 +14,8 @@ import {
   Info,
   Phone,
   MapPin,
-  Mail
+  Mail,
+  Menu
 } from "lucide-react";
 import Link from "next/link";
 import confetti from "canvas-confetti";
@@ -28,9 +29,7 @@ const InstagramIcon = ({ size = 24, style = {} }) => (
   </svg>
 );
 
-const API_URL = typeof window !== 'undefined' 
-  ? `http://${window.location.hostname}:5001` 
-  : 'http://localhost:5001';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001';
 
 const INSTAGRAM_URL = "https://www.instagram.com/_boobakeryy_/";
 
@@ -63,6 +62,7 @@ export default function Home() {
   const [showSplash, setShowSplash] = useState(true);
   const [splashFadeOut, setSplashFadeOut] = useState(false);
   const [showText, setShowText] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const textTimer = setTimeout(() => {
@@ -396,12 +396,10 @@ export default function Home() {
       }} />
 
       {/* Navigation Header */}
-      <header className="glassmorphism" style={{
+      <header className="glassmorphism header-container" style={{
         position: "sticky",
         top: "1rem",
         zIndex: 50,
-        margin: "1rem 2rem 0",
-        padding: "0.8rem 2rem",
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center"
@@ -430,7 +428,7 @@ export default function Home() {
           </span>
         </div>
 
-        <nav style={{ display: "flex", gap: "2rem", alignItems: "center" }} className="nav-links">
+        <nav className="nav-desktop">
           <a href="#menu-section" style={{ fontWeight: "500", color: "var(--text-primary)" }}>Shop</a>
           <Link href="/about" style={{ fontWeight: "500", color: "var(--text-primary)" }}>About Us</Link>
           <a 
@@ -540,12 +538,48 @@ export default function Home() {
               </span>
             )}
           </button>
+          
+          {/* Mobile Menu Button */}
+          <button className="nav-mobile-btn" onClick={() => setIsMobileMenuOpen(true)}>
+            <Menu size={24} />
+          </button>
         </div>
       </header>
 
+      {/* Mobile Menu Overlay */}
+      <div className={`nav-mobile-menu ${isMobileMenuOpen ? "open" : ""}`}>
+        <div style={{ display: "flex", justifyContent: "flex-end" }}>
+          <button onClick={() => setIsMobileMenuOpen(false)} style={{ background: "none", border: "none", color: "var(--text-primary)" }}>
+            <X size={32} />
+          </button>
+        </div>
+        <div style={{ display: "flex", flexDirection: "column", gap: "2rem", alignItems: "center", marginTop: "2rem" }}>
+          <a href="#menu-section" onClick={() => setIsMobileMenuOpen(false)} style={{ fontWeight: "600", color: "var(--text-primary)" }}>Shop</a>
+          <Link href="/about" onClick={() => setIsMobileMenuOpen(false)} style={{ fontWeight: "600", color: "var(--text-primary)" }}>About Us</Link>
+          <a 
+            href={INSTAGRAM_URL}
+            target="_blank" 
+            rel="noopener noreferrer"
+            onClick={() => setIsMobileMenuOpen(false)}
+            style={{ fontWeight: "600", color: "var(--text-primary)", display: "flex", alignItems: "center", gap: "0.5rem" }}
+          >
+            <InstagramIcon size={20} style={{ color: "#dc2743" }} /> Instagram
+          </a>
+          
+          {user ? (
+            <button onClick={() => { handleLogout(); setIsMobileMenuOpen(false); }} className="btn btn-secondary" style={{ marginTop: "1rem", width: "80%" }}>Logout</button>
+          ) : (
+            <div style={{ display: "flex", flexDirection: "column", gap: "1rem", width: "80%", marginTop: "1rem" }}>
+              <Link href="/login" onClick={() => setIsMobileMenuOpen(false)} className="btn btn-secondary">Login</Link>
+              <Link href="/register" onClick={() => setIsMobileMenuOpen(false)} className="btn btn-primary">Sign Up</Link>
+            </div>
+          )}
+        </div>
+      </div>
+
       {/* Hero Banner Section */}
       <section className="section" style={{ position: "relative", zIndex: 1, paddingBottom: "2rem" }}>
-        <div className="container" style={{ display: "grid", gridTemplateColumns: "1.1fr 0.9fr", gap: "3rem", alignItems: "center" }}>
+        <div className="container hero-grid">
           <div>
             <div style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", padding: "0.4rem 1rem", backgroundColor: "var(--accent-rose-light)", borderRadius: "50px", color: "var(--text-secondary)", fontWeight: "600", fontSize: "0.85rem", marginBottom: "1.5rem" }}>
               <Sparkles size={16} className="sparkle-icon" /> Natural crunch, rich chocolate... the perfect pair.
@@ -696,11 +730,7 @@ export default function Home() {
               </button>
             </div>
           ) : (
-            <div style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))",
-              gap: "2.5rem"
-            }}>
+            <div className="product-grid">
               {filteredProducts.map((product) => {
                 const selectedIndex = selectedOptions[product.id] || 0;
                 const activeOption = product.options[selectedIndex];

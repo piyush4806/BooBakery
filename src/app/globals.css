@@ -280,3 +280,136 @@ a {
     left: 31px;
   }
 }
+
+/* --- Responsive Utilities --- */
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2.5rem;
+}
+
+.nav-desktop {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.nav-mobile-btn {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.nav-mobile-menu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: var(--bg-primary);
+  z-index: 1000;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  transform: translateX(100%);
+  transition: transform 0.3s ease-in-out;
+}
+
+.nav-mobile-menu.open {
+  transform: translateX(0);
+}
+
+.nav-mobile-menu a, .nav-mobile-menu button {
+  font-size: 1.2rem;
+}
+
+.header-container {
+  margin: 1rem 2rem 0;
+  padding: 0.8rem 2rem;
+}
+
+/* Tablet Breakpoint */
+@media screen and (max-width: 1024px) {
+  .hero-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+  
+  .product-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  h1 {
+    font-size: 3.2rem !important;
+  }
+
+  .header-container {
+    margin: 1rem 1rem 0;
+    padding: 0.8rem 1rem;
+  }
+}
+
+/* Mobile Breakpoint */
+@media screen and (max-width: 768px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .hero-grid > div:first-child p {
+    margin: 0 auto 2rem;
+  }
+
+  .hero-grid > div:first-child .btn {
+    width: 100%;
+    margin-bottom: 0.8rem;
+  }
+  
+  .hero-grid > div:first-child div[style*="display: flex"] {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .nav-desktop {
+    display: none !important;
+  }
+
+  .nav-mobile-btn {
+    display: flex;
+  }
+
+  .header-container {
+    margin: 0.5rem;
+    padding: 0.8rem 1rem;
+  }
+
+  h1 {
+    font-size: 2.5rem !important;
+  }
+
+  .section {
+    padding: 3rem 0;
+  }
+  
+  .container {
+    padding: 0 1rem;
+  }
+  
+  .auth-card {
+    padding: 2rem 1.5rem !important;
+  }
+}
+

@@ -66,8 +66,8 @@ export default function Register() {
         </Link>
       </div>
 
-      <div style={{ flex: 1, display: "flex", justifyContent: "center", alignItems: "center", padding: "2rem", position: "relative", zIndex: 10 }}>
-        <div className="glassmorphism" style={{ width: "100%", maxWidth: "420px", padding: "3rem 2.5rem", borderRadius: "20px" }}>
+      <div style={{ flex: 1, display: "flex", justifyContent: "center", alignItems: "center", padding: "2rem", position: "relative", zIndex: 10 }} className="container">
+        <div className="glassmorphism auth-card" style={{ width: "100%", maxWidth: "420px", padding: "3rem 2.5rem", borderRadius: "20px" }}>
           <div style={{ textAlign: "center", marginBottom: "2.5rem" }}>
             <img src="/images/boobakery-logo.png" alt="logo" style={{ height: "50px", marginBottom: "1rem" }} />
             <h1 style={{ fontFamily: "var(--font-serif)", fontSize: "2.2rem", color: "var(--text-primary)", marginBottom: "0.5rem" }}>Create Account</h1>
