@@ -46,7 +46,7 @@ export default function Register() {
   };
 
   return (
-    <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", backgroundColor: "var(--bg-primary)" }}>
+    <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", backgroundColor: "var(--bg-primary)", position: "relative", overflowX: "hidden", width: "100%", maxWidth: "100vw" }}>
       {/* Decorative Blob */}
       <div style={{
         position: "absolute",

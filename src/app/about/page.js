@@ -27,7 +27,7 @@ const INSTAGRAM_URL = "https://www.instagram.com/_boobakeryy_/";
 
 export default function AboutPage() {
   return (
-    <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", backgroundColor: "var(--bg-primary)" }}>
+    <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", backgroundColor: "var(--bg-primary)", position: "relative", overflowX: "hidden", width: "100%", maxWidth: "100vw" }}>
       
       {/* Decorative Spheres */}
       <div style={{
@@ -54,12 +54,10 @@ export default function AboutPage() {
       }} />
 
       {/* Header */}
-      <header className="glassmorphism" style={{
+      <header className="glassmorphism header-container" style={{
         position: "sticky",
         top: "1rem",
         zIndex: 50,
-        margin: "1rem 2rem 0",
-        padding: "0.8rem 2rem",
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center"
@@ -68,9 +66,10 @@ export default function AboutPage() {
           <img 
             src="/images/boobakery-logo.png" 
             alt="boobakery logo" 
+            className="header-logo-img"
             style={{ height: "40px", width: "auto", objectFit: "contain" }} 
           />
-          <span style={{
+          <span className="header-logo-text" style={{
             fontFamily: "var(--font-serif)",
             fontWeight: "bold",
             fontSize: "1.6rem",
@@ -116,13 +115,13 @@ export default function AboutPage() {
           </div>
 
           <h1 style={{
-            fontSize: "3.8rem",
             lineHeight: "1.15",
             marginBottom: "1.5rem",
             fontFamily: "var(--font-serif)",
             color: "var(--text-primary)",
             maxWidth: "700px",
-            margin: "0 auto 1.5rem"
+            margin: "0 auto 1.5rem",
+            fontSize: "var(--font-size-h1, 3.8rem)"
           }}>
             A little kitchen, <br />
             <span style={{ color: "var(--text-secondary)", fontStyle: "italic" }}>a big chocolate dream</span>
@@ -144,7 +143,7 @@ export default function AboutPage() {
         <div className="container">
           
           {/* Story Cards Grid */}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2.5rem", maxWidth: "1000px", margin: "0 auto 4rem" }}>
+          <div className="hero-grid" style={{ maxWidth: "1000px", margin: "0 auto 4rem" }}>
             
             {/* Story Image Panel */}
             <div style={{ position: "relative", display: "flex", justifyContent: "center", alignItems: "center" }}>
@@ -439,8 +438,15 @@ export default function AboutPage() {
             <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "1.2rem" }}>
               <img 
                 src="/images/boobakery-logo.png" 
-                alt="boobakery logo" 
-                style={{ height: "36px", width: "auto", objectFit: "contain", filter: "brightness(2)" }} 
+                alt="BooBakery logo" 
+                style={{ 
+                  height: "45px", 
+                  width: "45px", 
+                  objectFit: "cover",
+                  borderRadius: "50%",
+                  border: "2px solid pink",
+                  backgroundColor: "pink"
+                }} 
               />
               <span style={{
                 fontFamily: "var(--font-serif)",
@@ -449,7 +455,7 @@ export default function AboutPage() {
                 color: "var(--bg-primary)",
                 letterSpacing: "0.02em"
               }}>
-                boobakery
+                BooBakery
               </span>
             </div>
             <p style={{ fontSize: "0.88rem", opacity: 0.8, lineHeight: "1.6" }}>

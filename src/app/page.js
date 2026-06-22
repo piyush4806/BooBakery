@@ -355,7 +355,7 @@ export default function Home() {
   }
 
   return (
-    <div className="main-layout" style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
+    <div className="main-layout" style={{ minHeight: "100vh", display: "flex", flexDirection: "column", position: "relative", overflowX: "hidden", width: "100%", maxWidth: "100vw" }}>
       {/* Announcement Bar */}
       <div style={{
         backgroundColor: "var(--text-secondary)",
@@ -468,6 +468,7 @@ export default function Home() {
         <div className="header-actions" style={{ display: "flex", gap: "1.2rem", alignItems: "center" }}>
           {/* Wishlist Icon with count */}
           <button 
+            className="hide-on-mobile"
             onClick={() => setIsWishlistOpen(true)}
             style={{
               background: "none",
@@ -503,7 +504,7 @@ export default function Home() {
           {/* Cart Icon with count */}
           <button 
             onClick={() => setIsCartOpen(true)}
-            className="cart-btn"
+            className="cart-btn hide-on-mobile"
             style={{
               background: "none",
               border: "none",
@@ -548,34 +549,69 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Mobile Menu Overlay */}
+      {/* Mobile Menu Backdrop */}
+      <div 
+        className={`nav-mobile-backdrop ${isMobileMenuOpen ? "open" : ""}`} 
+        onClick={() => setIsMobileMenuOpen(false)}
+      />
+
+      {/* Mobile Menu Drawer */}
       <div className={`nav-mobile-menu ${isMobileMenuOpen ? "open" : ""}`}>
-        <div style={{ display: "flex", justifyContent: "flex-end" }}>
-          <button onClick={() => setIsMobileMenuOpen(false)} style={{ background: "none", border: "none", color: "var(--text-primary)" }}>
-            <X size={32} />
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem" }}>
+          <span style={{ fontFamily: "var(--font-serif)", fontSize: "1.5rem", fontWeight: "bold", color: "var(--text-secondary)" }}>Menu</span>
+          <button onClick={() => setIsMobileMenuOpen(false)} style={{ background: "none", border: "none", color: "var(--text-primary)", cursor: "pointer" }}>
+            <X size={28} />
           </button>
         </div>
-        <div style={{ display: "flex", flexDirection: "column", gap: "2rem", alignItems: "center", marginTop: "2rem" }}>
-          <a href="#menu-section" onClick={() => setIsMobileMenuOpen(false)} style={{ fontWeight: "600", color: "var(--text-primary)" }}>Shop</a>
-          <Link href="/about" onClick={() => setIsMobileMenuOpen(false)} style={{ fontWeight: "600", color: "var(--text-primary)" }}>About Us</Link>
-          <a 
-            href={INSTAGRAM_URL}
-            target="_blank" 
-            rel="noopener noreferrer"
-            onClick={() => setIsMobileMenuOpen(false)}
-            style={{ fontWeight: "600", color: "var(--text-primary)", display: "flex", alignItems: "center", gap: "0.5rem" }}
-          >
-            <InstagramIcon size={20} style={{ color: "#dc2743" }} /> Instagram
-          </a>
+        
+        <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem", flex: 1, overflowY: "auto", paddingRight: "0.5rem" }}>
           
-          {user ? (
-            <button onClick={() => { handleLogout(); setIsMobileMenuOpen(false); }} className="btn btn-secondary" style={{ marginTop: "1rem", width: "80%" }}>Logout</button>
-          ) : (
-            <div style={{ display: "flex", flexDirection: "column", gap: "1rem", width: "80%", marginTop: "1rem" }}>
-              <Link href="/login" onClick={() => setIsMobileMenuOpen(false)} className="btn btn-secondary">Login</Link>
-              <Link href="/register" onClick={() => setIsMobileMenuOpen(false)} className="btn btn-primary">Sign Up</Link>
-            </div>
-          )}
+          {/* Mobile Cart & Wishlist */}
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.8rem", marginBottom: "0.5rem" }}>
+            <button 
+              onClick={() => { setIsWishlistOpen(true); setIsMobileMenuOpen(false); }}
+              style={{ background: "var(--bg-secondary)", border: "1px solid var(--border-color)", borderRadius: "12px", padding: "1rem 0.5rem", display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem", color: "var(--text-primary)", fontWeight: "600", fontSize: "0.85rem", cursor: "pointer" }}
+            >
+              <Heart size={22} style={{ fill: wishlist.length > 0 ? "var(--text-secondary)" : "none" }} /> 
+              <span>Wishlist ({wishlist.length})</span>
+            </button>
+            <button 
+              onClick={() => { setIsCartOpen(true); setIsMobileMenuOpen(false); }}
+              style={{ background: "var(--text-primary)", color: "var(--bg-primary)", border: "none", borderRadius: "12px", padding: "1rem 0.5rem", display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem", fontWeight: "600", fontSize: "0.85rem", boxShadow: "var(--shadow-md)", cursor: "pointer" }}
+            >
+              <ShoppingBag size={22} /> 
+              <span>Cart ({cart.reduce((sum, item) => sum + item.quantity, 0)})</span>
+            </button>
+          </div>
+
+          <div style={{ display: "flex", flexDirection: "column", gap: "1.2rem", padding: "1.5rem 0", borderTop: "1px solid var(--border-color)", borderBottom: "1px solid var(--border-color)" }}>
+            <a href="#menu-section" onClick={() => setIsMobileMenuOpen(false)} style={{ fontWeight: "600", color: "var(--text-primary)", fontSize: "1.1rem", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+              Shop <ArrowRight size={18} style={{ color: "var(--text-muted)" }} />
+            </a>
+            <Link href="/about" onClick={() => setIsMobileMenuOpen(false)} style={{ fontWeight: "600", color: "var(--text-primary)", fontSize: "1.1rem", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+              About Us <ArrowRight size={18} style={{ color: "var(--text-muted)" }} />
+            </Link>
+            <a 
+              href={INSTAGRAM_URL}
+              target="_blank" 
+              rel="noopener noreferrer"
+              onClick={() => setIsMobileMenuOpen(false)}
+              style={{ fontWeight: "600", color: "var(--text-primary)", fontSize: "1.1rem", display: "flex", alignItems: "center", gap: "0.5rem" }}
+            >
+              <InstagramIcon size={20} style={{ color: "#dc2743" }} /> Instagram
+            </a>
+          </div>
+          
+          <div style={{ marginTop: "auto", paddingTop: "2rem", paddingBottom: "2rem" }}>
+            {user ? (
+              <button onClick={() => { handleLogout(); setIsMobileMenuOpen(false); }} className="btn btn-secondary" style={{ width: "100%" }}>Logout</button>
+            ) : (
+              <div style={{ display: "flex", flexDirection: "column", gap: "1rem", width: "100%" }}>
+                <Link href="/login" onClick={() => setIsMobileMenuOpen(false)} className="btn btn-secondary" style={{ width: "100%", justifyContent: "center" }}>Login</Link>
+                <Link href="/register" onClick={() => setIsMobileMenuOpen(false)} className="btn btn-primary" style={{ width: "100%", justifyContent: "center" }}>Sign Up</Link>
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
@@ -680,7 +716,7 @@ export default function Home() {
           </div>
 
           {/* Categories Tab Navigation */}
-          <div style={{
+          <div className="category-scroll" style={{
             display: "flex",
             justifyContent: "center",
             flexWrap: "wrap",
@@ -1340,7 +1376,7 @@ export default function Home() {
               <span style={{
                 fontFamily: "var(--font-serif)",
                 fontWeight: "bold",
-                fontSize: "1.6rem",
+                fontSize: "1.5rem",
                 color: "var(--bg-primary)",
                 letterSpacing: "0.02em"
               }}>
