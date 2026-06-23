@@ -769,7 +769,12 @@ export default function Home() {
             </div>
           ) : (
             <div className="product-grid">
-              {filteredProducts.map((product) => {
+              {[
+                filteredProducts.slice(0, Math.ceil(filteredProducts.length / 2)),
+                filteredProducts.slice(Math.ceil(filteredProducts.length / 2))
+              ].map((rowProducts, rowIndex) => (
+                <div key={rowIndex} className="product-row">
+                  {rowProducts.map((product) => {
                 const selectedIndex = selectedOptions[product.id] || 0;
                 const activeOption = product.options[selectedIndex];
                 const isWishlisted = wishlist.some(item => item.id === product.id);
@@ -964,6 +969,8 @@ export default function Home() {
                   </div>
                 );
               })}
+                </div>
+              ))}
             </div>
           )}
         </div>
